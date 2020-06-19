@@ -8,8 +8,8 @@ Created on Fri Jun 19 16:29:24 2020
 import pandas as pd
 import matplotlib.pyplot as plt
 
-#importing dataset and renaming as Fire and Theft
-dataset=(pd.read_excel('Fire_Theft_Chicago.xls')).rename(columns={'X': 'Fire', 'Y':'Theft'})
+#importing dataset and renaming as Fire and Theft Salary
+dataset=(pd.read_csv('Salary_Data.csv')).rename(columns={'YearsExperience': 'Experience', 'Salary':'Salary'})
 
 #splitting the data into X and Y
 dataset_X=dataset.iloc[:,0]
@@ -24,7 +24,7 @@ def variance(values):
     mean_for_variance=mean(values)
     return round( sum( [ (x-mean_for_variance)**2 for x in values] ), 2)
 
-
+plt.scatter(dataset_X, dataset_Y)
 
 
 
