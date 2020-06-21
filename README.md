@@ -1,3 +1,4 @@
-Hi!!
+**Machine Learning**
 
-Here are the basics ML codes.
+ ![alt tag](readme_resource/ml.JPG)
+
