@@ -6,10 +6,9 @@ Created on Wed Jul 15 21:42:00 2020
 """
 #loading the libraries
 import pandas as pd
-import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder,OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import  LogisticRegression
 from sklearn import metrics
@@ -18,7 +17,7 @@ from sklearn import metrics
 dataset=pd.read_csv("gender_classification.csv")
 
 #checking for Nan Values:
-print(dataset.isnull().sum())
+print("The count of null values:\n",dataset.isnull().sum())
 
 #splitting dataset into independet and dependent data
 X=dataset.iloc[:,:4]
@@ -32,8 +31,9 @@ for index in X:
 encoder_Y=LabelEncoder()
 Y=encoder_Y.fit_transform(Y)
 
-#encoding the data and droping the first value
-X=pd.get_dummies(X,drop_first=True)
+#encoding the data and droping the first value using OHE
+ohe =OneHotEncoder(drop='first')
+X = ohe.fit_transform(X).toarray()
 
 #splitting data into test and train data
 x_train, x_test, y_train, y_test = train_test_split(X,Y, test_size=0.2, random_state=0)
@@ -62,7 +62,13 @@ plt.plot(fpr,tpr,label="data 1, auc="+str(auc))
 plt.legend(loc=4)
 plt.show()
 
-#test inputs
-x_t=pd.DataFrame()
-x_t=pd.get_dummies(x_t,drop_first=True)
-pred_t=lr.predict(x_t)
+#testign the results
+def fun_pred(choices):
+    X_t=pd.DataFrame(choices,index=[1])
+    X_t=ohe.transform(X_t).toarray()
+    prediction=lr.predict(X_t)
+    prediction=encoder_Y.inverse_transform(prediction)
+    return prediction
+      
+dict={'Favorite Color' : "Cool",'Favorite Music Genre' : "Pop",'Favorite Beverage' : "Vodka",'Favorite Soft Drink' : "Fanta"}  
+fun_pred(dict)
