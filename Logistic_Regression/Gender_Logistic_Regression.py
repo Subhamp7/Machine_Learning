@@ -70,5 +70,8 @@ def fun_pred(choices):
     prediction=encoder_Y.inverse_transform(prediction)
     return prediction
       
-dict={'Favorite Color' : "Cool",'Favorite Music Genre' : "Pop",'Favorite Beverage' : "Vodka",'Favorite Soft Drink' : "Fanta"}  
+dict={'Favorite Color'          : "Warm",
+      'Favorite Music Genre'    : "Rock",
+      'Favorite Beverage'       : "Vodka",
+      'Favorite Soft Drink'     : "7UP/Sprite"}  
 fun_pred(dict)
