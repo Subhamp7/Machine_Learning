@@ -4,12 +4,9 @@ Created on Thu Apr 30 21:48:34 2020
 
 @author: subham
 """
-# Linear Regression
-
 # Importing Libraries
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import statsmodels.api as sm
 from sklearn import metrics
 
@@ -18,9 +15,6 @@ dataset=pd.read_csv("USA_Housing.csv")
 X=dataset.iloc[:,:5]
 Y=dataset.iloc[:,-2]
 
-#visualizing the data
-corr=dataset.corr()
-sns.heatmap(corr)
 
 # Splitting data into training set and Test set
 from sklearn.model_selection import train_test_split
