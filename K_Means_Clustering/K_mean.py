@@ -100,17 +100,16 @@ for index in k:
     inertia.append(kmn.inertia_)
     distortions.append(sum(np.min(cdist(dataset, kmn.cluster_centers_, 'euclidean'), axis=1)) / dataset.shape[0])
     
-fig = plt.figure(2,2,1)
-ax1 = fig.add_subplot()
-ax1.plot(inertia,'bx-')
-ax1.set_xlabel("K value")
-ax1.set_ylabel("Inertia")
-ax1.set_title("The Elbow method showing the optimal K value using Inertia value")
+p1=plt
+p1.plot(inertia,'bx-')
+p1.xlabel("K value")
+p1.ylabel("Inertia")
+p1.title("The Elbow method showing the optimal K value using Inertia value")
 
-ax2 = fig.add_subplot(2,2,2)
-ax2.plot(k,distortions,'bx-')
-ax2.set_xlabel("K value")
-ax2.set_ylabel("Silhouette Score")
-ax2.set_title("The Elbow method showing the optimal K value using Silhouette score")
+p2=plt
+p2.plot(k,distortions,'bx-')
+p2.xlabel("K value")
+p2.ylabel("Silhouette Score")
+p2.title("The Elbow method showing the optimal K value using Silhouette score")
 
 plt.show() 
