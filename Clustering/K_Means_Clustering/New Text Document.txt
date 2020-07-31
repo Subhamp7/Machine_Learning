@@ -1,0 +1,5 @@
+https://www.kaggle.com/arjunbhasin2013/ccdata
+
+https://www.kaggle.com/sabanasimbutt/clustering-visualization-of-clusters-using-pca
+
+https://www.geeksforgeeks.org/elbow-method-for-optimal-value-of-k-in-kmeans/
