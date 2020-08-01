@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report,confusion_matrix
 
 
 #loading the dataset
@@ -38,3 +38,6 @@ svm=SVC(kernel='linear')
 svm.fit(x_train,y_train)
 
 pred=svm.predict(x_test)
+
+cm=confusion_matrix(pred,y_test)
+report=classification_report(pred,y_test)
