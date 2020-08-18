@@ -68,10 +68,14 @@ def fun_pred(choices):
     X_t=ohe.transform(X_t).toarray()
     prediction=lr.predict(X_t)
     prediction=encoder_Y.inverse_transform(prediction)
-    return prediction
+    if(prediction=="F"):
+        return "Female"
+    else:
+        return "Male"
       
 dict={'Favorite Color'          : "Warm",
       'Favorite Music Genre'    : "Rock",
       'Favorite Beverage'       : "Vodka",
       'Favorite Soft Drink'     : "7UP/Sprite"}  
+
 fun_pred(dict)
