@@ -36,6 +36,9 @@ X_grid = np.arange(min(X_train), max(X_train), 0.01)
 X_grid = X_grid.reshape((len(X_grid), 1))  
 plt.scatter(X_train,Y_train, color='red')
 plt.plot(X_grid,dt.predict(X_grid),color='blue')
+plt.title('DT')
+plt.xlabel('Experience')
+plt.ylabel('Salary')
 plt.show()
 
 #accuracy
