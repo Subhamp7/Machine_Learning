@@ -4,26 +4,42 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor, plot_tree
+from sklearn.metrics  import r2_score
 
 # Importing the dataset
-dataset = pd.read_csv('USA_Housing.csv')
-X = dataset.iloc[:, :5].values
-y = dataset.iloc[:, -2:-1].values
+df = pd.read_csv('https://query.data.world/s/rjfb64km2adpnnrglujstxylw3wanb',nrows=5000)
 
-# Training the Decision Tree Regression model on the whole dataset
-from sklearn.tree import DecisionTreeRegressor
-regressor = DecisionTreeRegressor(random_state = 0)
-regressor.fit(X, y)
+#extracting the required data
+data=df[['experience_total','salary']]
 
-# Predicting a new result
-regressor.predict([[6.5]])
+#checking for missing data
+print("The missing data \n {} ".format(data.isnull().sum()))
 
-# Visualising the Decision Tree Regression results (higher resolution)
-X_grid = np.arange(min(X), max(X), 0.01)
-X_grid = X_grid.reshape((len(X_grid), 1))
-plt.scatter(X, y, color = 'red')
-plt.plot(X_grid, regressor.predict(X_grid), color = 'blue')
-plt.title('Truth or Bluff (Decision Tree Regression)')
-plt.xlabel('Position level')
-plt.ylabel('Salary')
+#droping the rows with missing data
+data=data.dropna( how='any')
+
+#Splitting X and Y sets
+X=data.iloc[:,0:1].values
+Y=data.iloc[:,1:2].values
+
+#splitting data into train and test sets
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y, test_size=0.3, random_state=0)
+
+#applying DT regressor
+dt=DecisionTreeRegressor(max_depth=4,random_state = 0)
+dt.fit(X_train,Y_train)
+
+#plotting the training results
+X_grid = np.arange(min(X_train), max(X_train), 0.01) 
+X_grid = X_grid.reshape((len(X_grid), 1))  
+plt.scatter(X_train,Y_train, color='red')
+plt.plot(X_grid,dt.predict(X_grid),color='blue')
 plt.show()
+
+#accuracy
+print("The accuracy of the model is : ",r2_score(Y_test, dt.predict(X_test)))
+
+#plotting the tree structure
+plot_tree(dt,filled=True)
