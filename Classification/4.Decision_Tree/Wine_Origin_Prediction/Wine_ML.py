@@ -30,20 +30,20 @@ X=sc.fit_transform(X)
 #splitting the X and Y to training set and test set
 X_train, X_test, Y_train, Y_test =train_test_split(X, Y, test_size=0.3, random_state=0)
 
-#
+#creating the classifier object and fitting the model
 DTC=DecisionTreeClassifier()
-
 DTC.fit(X_train,Y_train)
 
+#predicting the X_test
 pred=DTC.predict(X_test)
 
+#validating
 cm=confusion_matrix(pred,Y_test)
 
-
+#printing the metrics
 print('\nAccuracy: {:.2f}\n'.format(accuracy_score(Y_test, pred)))
-
 print('\nClassification Report\n')
 print(classification_report(Y_test, pred, target_names=['Wine Type 1', 'Wine Type 2', 'Wine Type 3']))
 
-
+#plotting the decision tree
 plot_tree(DTC, filled=True)
