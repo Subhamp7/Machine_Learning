@@ -10,6 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix,classification_report,accuracy_score
 
 #importing dataset
@@ -59,26 +61,21 @@ min_samples_leaf = minimum number of samples which can be stored in a tree leaf.
 min_samples_split = minimum number of samples necessary in a node to cause node splitting.
 n_estimators = number of trees in the ensamble.'''
 
+
+"--------------------------------------------------------------------------------------"
 #hyperperemeter tunning manual
 
 #creating object for Random Forest
 rf_1=RandomForestClassifier(criterion="entropy")
 rf_1.fit(X_train, Y_train)
 
-#predicting
+#predicting and validating
 y_pred_1=rf_1.predict(X_test)
-
-#validation
 cm_1=confusion_matrix(Y_test, y_pred_1)
-
-#classification report
 report_1=classification_report(Y_test, y_pred_1)
-
-#accuracy
 accuracy_1=accuracy_score(Y_test, y_pred_1)
 
 #randmized searchcv
-from sklearn.model_selection import RandomizedSearchCV
 n_estimators=[int(index) for index in np.linspace(start = 200, stop = 2000, num = 10)]
 criterion=["gini","entropy"]
 max_depth=[int(x) for x in np.linspace(10, 1000,10)]
@@ -103,17 +100,12 @@ random_model=rf_random.best_estimator_
 
 #validating the model
 y_pred_random=random_model.predict(X_test)
-
 cm_random=confusion_matrix(Y_test, y_pred_random)
-
 report_random=classification_report(Y_test, y_pred_random)
-
 accuracy_random=accuracy_score(Y_test, y_pred_random)
 
-
+"--------------------------------------------------------------------------------------------"
 #grid searchcv
-from sklearn.model_selection import GridSearchCV
-
 param_grid = {
     'criterion': [rf_random.best_params_['criterion']],
     'max_depth': [rf_random.best_params_['max_depth']],
@@ -135,13 +127,11 @@ rf_3=RandomForestClassifier()
 rf_grid=GridSearchCV(estimator=rf_3, param_grid=param_grid,
                              cv=3, verbose=2, n_jobs=-1)
 rf_grid.fit(X_train, Y_train)
-
 grid_model=rf_grid.best_estimator_
+
+
 #validating the model
 y_pred_grid=grid_model.predict(X_test)
-
 cm_grid=confusion_matrix(Y_test, y_pred_grid)
-
 report_grid=classification_report(Y_test, y_pred_grid)
-
 accuracy_grid=accuracy_score(Y_test, y_pred_grid)
