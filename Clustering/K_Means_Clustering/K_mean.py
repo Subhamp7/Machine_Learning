@@ -34,53 +34,53 @@ list_15=['BALANCE_FREQUENCY', 'PURCHASES_FREQUENCY',
          'ONEOFF_PURCHASES_FREQUENCY', 'PURCHASES_INSTALLMENTS_FREQUENCY',
          'CASH_ADVANCE_FREQUENCY', 'PRC_FULL_PAYMENT']
 
-list_400=['CASH_ADVANCE_TRX', 'PURCHASES_TRX']
+list_400=['CASH_ADVANCE_TRdataset', 'PURCHASES_TRdataset']
 
-for index in list_50000:
+for indedataset in list_50000:
     dataset['Temp']=0
-    dataset.loc[((dataset[index]>0     ) & (dataset[index]<=500   )),'Temp']=1
-    dataset.loc[((dataset[index]>500   ) & (dataset[index]<=1000  )),'Temp']=2
-    dataset.loc[((dataset[index]>1000  ) & (dataset[index]<=2500  )),'Temp']=3
-    dataset.loc[((dataset[index]>2500  ) & (dataset[index]<=5000  )),'Temp']=4
-    dataset.loc[((dataset[index]>5000  ) & (dataset[index]<=10000 )),'Temp']=5
-    dataset.loc[(dataset[index]>10000  ),'Temp']=6
-    dataset[index]=dataset['Temp']
+    dataset.loc[((dataset[indedataset]>0     ) & (dataset[indedataset]<=500   )),'Temp']=1
+    dataset.loc[((dataset[indedataset]>500   ) & (dataset[indedataset]<=1000  )),'Temp']=2
+    dataset.loc[((dataset[indedataset]>1000  ) & (dataset[indedataset]<=2500  )),'Temp']=3
+    dataset.loc[((dataset[indedataset]>2500  ) & (dataset[indedataset]<=5000  )),'Temp']=4
+    dataset.loc[((dataset[indedataset]>5000  ) & (dataset[indedataset]<=10000 )),'Temp']=5
+    dataset.loc[(dataset[indedataset]>10000  ),'Temp']=6
+    dataset[indedataset]=dataset['Temp']
     
-for index in list_15:
+for indedataset in list_15:
     dataset['Temp']=0
-    dataset.loc[((dataset[index]>0)  &(dataset[index]<=0.1)),'Temp']=1
-    dataset.loc[((dataset[index]>0.1)&(dataset[index]<=0.2)),'Temp']=2
-    dataset.loc[((dataset[index]>0.2)&(dataset[index]<=0.3)),'Temp']=3
-    dataset.loc[((dataset[index]>0.3)&(dataset[index]<=0.4)),'Temp']=4
-    dataset.loc[((dataset[index]>0.4)&(dataset[index]<=0.5)),'Temp']=5
-    dataset.loc[((dataset[index]>0.5)&(dataset[index]<=0.6)),'Temp']=6
-    dataset.loc[((dataset[index]>0.6)&(dataset[index]<=0.7)),'Temp']=7
-    dataset.loc[((dataset[index]>0.7)&(dataset[index]<=0.8)),'Temp']=8
-    dataset.loc[((dataset[index]>0.8)&(dataset[index]<=0.9)),'Temp']=9
-    dataset.loc[((dataset[index]>0.9)&(dataset[index]<=1.0)),'Temp']=10
-    dataset[index]=dataset['Temp']
+    dataset.loc[((dataset[indedataset]>0)  &(dataset[indedataset]<=0.1)),'Temp']=1
+    dataset.loc[((dataset[indedataset]>0.1)&(dataset[indedataset]<=0.2)),'Temp']=2
+    dataset.loc[((dataset[indedataset]>0.2)&(dataset[indedataset]<=0.3)),'Temp']=3
+    dataset.loc[((dataset[indedataset]>0.3)&(dataset[indedataset]<=0.4)),'Temp']=4
+    dataset.loc[((dataset[indedataset]>0.4)&(dataset[indedataset]<=0.5)),'Temp']=5
+    dataset.loc[((dataset[indedataset]>0.5)&(dataset[indedataset]<=0.6)),'Temp']=6
+    dataset.loc[((dataset[indedataset]>0.6)&(dataset[indedataset]<=0.7)),'Temp']=7
+    dataset.loc[((dataset[indedataset]>0.7)&(dataset[indedataset]<=0.8)),'Temp']=8
+    dataset.loc[((dataset[indedataset]>0.8)&(dataset[indedataset]<=0.9)),'Temp']=9
+    dataset.loc[((dataset[indedataset]>0.9)&(dataset[indedataset]<=1.0)),'Temp']=10
+    dataset[indedataset]=dataset['Temp']
     
-for index in list_400:
+for indedataset in list_400:
     dataset['Temp']=0
-    dataset.loc[((dataset[index]>0)&(dataset[index]<=5)),'Temp']=1
-    dataset.loc[((dataset[index]>5)&(dataset[index]<=10)),'Temp']=2
-    dataset.loc[((dataset[index]>10)&(dataset[index]<=15)),'Temp']=3
-    dataset.loc[((dataset[index]>15)&(dataset[index]<=20)),'Temp']=4
-    dataset.loc[((dataset[index]>20)&(dataset[index]<=30)),'Temp']=5
-    dataset.loc[((dataset[index]>30)&(dataset[index]<=50)),'Temp']=6
-    dataset.loc[((dataset[index]>50)&(dataset[index]<=100)),'Temp']=7
-    dataset.loc[((dataset[index]>100)),'Temp']=8
-    dataset[index]=dataset['Temp']
+    dataset.loc[((dataset[indedataset]>0)&(dataset[indedataset]<=5)),'Temp']=1
+    dataset.loc[((dataset[indedataset]>5)&(dataset[indedataset]<=10)),'Temp']=2
+    dataset.loc[((dataset[indedataset]>10)&(dataset[indedataset]<=15)),'Temp']=3
+    dataset.loc[((dataset[indedataset]>15)&(dataset[indedataset]<=20)),'Temp']=4
+    dataset.loc[((dataset[indedataset]>20)&(dataset[indedataset]<=30)),'Temp']=5
+    dataset.loc[((dataset[indedataset]>30)&(dataset[indedataset]<=50)),'Temp']=6
+    dataset.loc[((dataset[indedataset]>50)&(dataset[indedataset]<=100)),'Temp']=7
+    dataset.loc[((dataset[indedataset]>100)),'Temp']=8
+    dataset[indedataset]=dataset['Temp']
     
 #droping the temp column used for iteration
-dataset=dataset.drop('Temp', axis=1)
+dataset=dataset.drop('Temp', adatasetis=1)
 
 #scaling down the dataset
 sc=StandardScaler()
 dataset=sc.fit_transform(dataset)
 
 #applying K mean using 3 clusters
-kmn=KMeans(n_clusters=2)
+kmn=KMeans(n_clusters=12)
 kmn.fit(dataset)
 pred=kmn.predict(dataset)
 sil_score=silhouette_score(dataset,pred)
@@ -89,27 +89,27 @@ sil_score=silhouette_score(dataset,pred)
 score=[]
 distortions=[]
 inertia=[]
-k=range(2,20)
+k=range(2,40)
 
-for index in k: 
-    kmn=KMeans(n_clusters=index)
+for indedataset in k: 
+    kmn=KMeans(n_clusters=indedataset)
     kmn.fit(dataset)
     pred=kmn.predict(dataset)
     sil_score=silhouette_score(dataset,pred)
     score.append(sil_score)
     inertia.append(kmn.inertia_)
-    distortions.append(sum(np.min(cdist(dataset, kmn.cluster_centers_, 'euclidean'), axis=1)) / dataset.shape[0])
+    distortions.append(sum(np.min(cdist(dataset, kmn.cluster_centers_, 'euclidean'), adatasetis=1)) / dataset.shape[0])
     
-p1=plt
-p1.plot(inertia,'bx-')
-p1.xlabel("K value")
-p1.ylabel("Inertia")
-p1.title("The Elbow method showing the optimal K value using Inertia value")
+#visulizing the inertia and k value
+plt.plot(inertia,'bdataset-')
+plt.datasetlabel("K value")
+plt.ylabel("Inertia")
+plt.title("The Elbow method showing the optimal K value using Inertia value")
+plt.show() 
 
-p2=plt
-p2.plot(k,distortions,'bx-')
-p2.xlabel("K value")
-p2.ylabel("Silhouette Score")
-p2.title("The Elbow method showing the optimal K value using Silhouette score")
-
+#visulizing the Silhouette Score and k value
+plt.plot(k,distortions,'bx-')
+plt.xlabel("K value")
+plt.ylabel("Silhouette Score")
+plt.title("The Elbow method showing the optimal K value using Silhouette score")
 plt.show() 
