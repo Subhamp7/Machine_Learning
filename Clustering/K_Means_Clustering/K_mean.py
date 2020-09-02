@@ -14,6 +14,8 @@ from sklearn.preprocessing import  StandardScaler
 from sklearn.cluster import KMeans
 from scipy.spatial.distance import cdist 
 from sklearn.metrics import silhouette_score
+from sklearn.decomposition import PCA
+from sklearn.metrics.pairwise import cosine_similarity
 
 #loading the dataset
 dataset=pd.read_csv("credit_card.csv")
@@ -34,7 +36,7 @@ list_15=['BALANCE_FREQUENCY', 'PURCHASES_FREQUENCY',
          'ONEOFF_PURCHASES_FREQUENCY', 'PURCHASES_INSTALLMENTS_FREQUENCY',
          'CASH_ADVANCE_FREQUENCY', 'PRC_FULL_PAYMENT']
 
-list_400=['CASH_ADVANCE_TRdataset', 'PURCHASES_TRdataset']
+list_400=['CASH_ADVANCE_TRX', 'PURCHASES_TRX']
 
 for indedataset in list_50000:
     dataset['Temp']=0
@@ -73,43 +75,88 @@ for indedataset in list_400:
     dataset[indedataset]=dataset['Temp']
     
 #droping the temp column used for iteration
-dataset=dataset.drop('Temp', adatasetis=1)
+dataset=dataset.drop('Temp', axis=1)
+
+#removing the correlated data
+def corr_max(dataset):
+  dataset_corr = dataset.corr().abs()
+  ones_matrix = np.triu(np.ones(dataset_corr.shape), k=1).astype(np.bool)
+  dataset_corr = dataset_corr.where(ones_matrix)
+  column_drop = [index for index in dataset_corr.columns if any(dataset_corr[index] > 0.80)]
+  dataset=dataset.drop(column_drop, axis=1)
+  return dataset
+
+dataset=corr_max(dataset)
 
 #scaling down the dataset
 sc=StandardScaler()
 dataset=sc.fit_transform(dataset)
 
-#applying K mean using 3 clusters
-kmn=KMeans(n_clusters=12)
-kmn.fit(dataset)
-pred=kmn.predict(dataset)
-sil_score=silhouette_score(dataset,pred)
-
 #calculating the scores, distortion and inertia
 score=[]
 distortions=[]
 inertia=[]
-k=range(2,40)
+k=range(2,20)
 
-for indedataset in k: 
-    kmn=KMeans(n_clusters=indedataset)
+for index in k: 
+    kmn=KMeans(n_clusters=index)
     kmn.fit(dataset)
     pred=kmn.predict(dataset)
     sil_score=silhouette_score(dataset,pred)
     score.append(sil_score)
     inertia.append(kmn.inertia_)
-    distortions.append(sum(np.min(cdist(dataset, kmn.cluster_centers_, 'euclidean'), adatasetis=1)) / dataset.shape[0])
+    distortions.append(sum(np.min(cdist(dataset, kmn.cluster_centers_, 'euclidean'), axis=1)) / dataset.shape[0])
     
 #visulizing the inertia and k value
-plt.plot(inertia,'bdataset-')
-plt.datasetlabel("K value")
+plt.plot(k,inertia,'bx-')
+plt.xlabel("K value")
 plt.ylabel("Inertia")
 plt.title("The Elbow method showing the optimal K value using Inertia value")
 plt.show() 
 
 #visulizing the Silhouette Score and k value
-plt.plot(k,distortions,'bx-')
+plt.plot(k,score,'bx-')
 plt.xlabel("K value")
 plt.ylabel("Silhouette Score")
 plt.title("The Elbow method showing the optimal K value using Silhouette score")
 plt.show() 
+
+#applying K mean using 3 clusters
+kmn=KMeans(n_clusters=6)
+kmn.fit(dataset)
+pred=kmn.predict(dataset)
+sil_score=silhouette_score(dataset,pred)
+
+
+#plotting the distribution
+labels=kmn.labels_
+X=dataset
+dist = 1 - cosine_similarity(X)
+pca = PCA(2)
+pca.fit(dist)
+X_PCA = pca.transform(dist)
+X_PCA.shape
+x, y = X_PCA[:, 0], X_PCA[:, 1]
+
+colors = {0: 'red',
+          1: 'blue',
+          2: 'green', 
+          3: 'yellow', 
+          4: 'orange',  
+          5:'purple'}
+  
+df = pd.DataFrame({'x': x, 'y':y, 'label':labels}) 
+groups = df.groupby('label')
+
+fig, ax = plt.subplots(figsize=(20, 13)) 
+
+for name, group in groups:
+    ax.plot(group.x, group.y, marker='o', linestyle='', ms=5,
+            color=colors[name], mec='none')
+    ax.set_aspect('auto')
+    ax.tick_params(axis='x',which='both',bottom='off',top='off',labelbottom='off')
+    ax.tick_params(axis= 'y',which='both',left='off',top='off',labelleft='off')
+    
+ax.legend()
+ax.set_title("Customers Segmentation based on their Credit Card usage bhaviour.")
+plt.show()
